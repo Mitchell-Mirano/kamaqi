@@ -1,0 +1,53 @@
+from fastapi import APIRouter,Depends
+from sqlalchemy.orm import Session
+from database.database import get_db
+
+from {{app}}.schemas import ({{app.capitalize()}}Create,
+                             {{app.capitalize()}}Read,
+                             {{app.capitalize()}}Update,
+                             {{app.capitalize()}}Delete)
+
+#from {{app}}.crud import (create_{{app}},read_{{app}},update_{{app}},delete_{{app}})
+
+
+{{app}}_routs= APIRouter()
+
+
+@{{app}}_routs.post(path='/api/v1/{{app}}/create/',
+                    tags=["{{app.capitalize()}}"])
+
+async def create_{{app}}(data:{{app.capitalize()}}Create,datadb=Depends(get_db)):
+    print(data)
+    return "creating a new {app} "
+
+
+@{{app}}_routs.get(path='/api/v1/{{app}}',
+                    tags=["{{app.capitalize()}}"])
+
+async def get_{{app}}(db=Depends(get_db)):
+
+    return "Reading  {{app}}s"
+
+@{{app}}_routs.get(path='/api/v1/{{app}}',
+                    tags=["{{app.capitalize()}}"])
+
+async def get_one_{{app}}({{app}}_id:int,db=Depends(get_db)):
+
+    return "Reading a one  {{app}}"
+
+
+@{{app}}_routs.put(path='/api/v1/{{app}}/update/{id}',
+                    tags=["{{app.capitalize()}}"])
+
+async def update_{{app}}(id:int,data:{{app.capitalize()}}Update,db=Depends(get_db)):
+
+    return "Updating  {{app}}"
+
+
+@{{app}}_routs.delete(path='/api/v1/{{app}}/delete/{id}',
+                    tags=["{{app.capitalize()}}"])
+
+async def delete_{{app}}(id:int,db=Depends(get_db)):
+
+    return "Deleting  {{app}}"
+

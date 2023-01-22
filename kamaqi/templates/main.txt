@@ -1,0 +1,24 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+# Import routs
+{% for app in apps %}
+from {{app}}.router import {{app}}_routes
+{% endfor %}
+
+
+app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"])
+
+# Include routs
+{% for app in apps %}
+app.include_router({{app}}_routs)
+{% endfor %}

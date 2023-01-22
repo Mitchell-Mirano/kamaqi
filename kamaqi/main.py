@@ -1,30 +1,21 @@
 import typer
 
 
+from kamaqi.set import settings
+from kamaqi.add import add
+from kamaqi.show import show
+from kamaqi.remove import remove
+from kamaqi.create import create
+
 app = typer.Typer()
 
-
-@app.callback()
-def callback():
-    """
-    Awesome Kamaqi
-    """
-
-
-@app.command()
-def shoot():
-    """
-    Shoot the Kamaqi
-    """
-    typer.echo("Shooting Kamaqi")
+app.add_typer(settings.app, name="set")
+app.add_typer(add.app,name="add")
+app.add_typer(show.app,name="show")
+app.add_typer(remove.app,name="remove")
+app.add_typer(create.app,name="create")
 
 
-@app.command()
-def load():
-    """
-    Load the Kamaqi
-    """
-    typer.echo("Loading Kamaqi")
 
 if __name__ == "__main__":
     app()
