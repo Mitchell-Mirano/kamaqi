@@ -3,8 +3,7 @@ from typer import Typer
 from rich import print
 from typing import List
 
-from kamaqi.utils.files import (read_project_file,
-                         save_project_file)
+from kamaqi.utils.files import read_project_file,save_project_file
 
 app=Typer()
 

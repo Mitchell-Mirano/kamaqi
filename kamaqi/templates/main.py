@@ -1,13 +1,16 @@
+MAIN=\
+"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import routs
-{% for app in apps %}
-from {{app}}.router import {{app}}_routes
-{% endfor %}
+from {{project_name}}.router import {{project_name}}_routs
+{%  for app in apps %}
+from {{app}}.router import {{app}}_routs
+{%  endfor %}
 
 
-app = FastAPI()
+app = FastAPI(title="{{project_name}} API")
 
 origins = ["*"]
 
@@ -19,6 +22,8 @@ app.add_middleware(
     allow_headers=["*"])
 
 # Include routs
-{% for app in apps %}
+app.include_router({{project_name}}_routs)
+{%  for app in apps %}
 app.include_router({{app}}_routs)
-{% endfor %}
+{%  endfor %}
+""" 

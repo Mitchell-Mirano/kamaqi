@@ -1,3 +1,5 @@
+APP_SETTINGS=\
+"""
 from fastapi_mail import ConnectionConfig
 from functools import lru_cache
 from pydantic import BaseSettings
@@ -5,20 +7,20 @@ from pydantic import EmailStr
 
 
 
-class AppSettings(BaseSettings):
+class {{app.capitalize()}}Settings(BaseSettings):
     BACKEND_HOST:str
-    FRONTEND_HOST:str
     class Config:
         env_file =".env"
 
 @lru_cache()
-def get_app_config():
-    return AppSettings()
+def get_{{app}}_settings():
+    return {{app.capitalize()}}Settings()
 
 
 class TokensConfig(BaseSettings):
     SECRET_KEY:str
     JMV_ALGORITHM:str
+    TIME_DELTA:int
     class Config:
         env_file = ".env"
 
@@ -68,12 +70,14 @@ class DatabaseSettings(BaseSettings):
     class Config:
         env_file = ".env"
 
-@lru_cache()
 def get_database_string_conection():
     database_settings=DatabaseSettings()
-    conection_string="mongodb://user:password@host:port"
+    conection_string="postgresql+psycopg2://user:password@host:port/database_name"
     conection_string=conection_string.replace("user",database_settings.DATABASE_USER)\
                     .replace("password",database_settings.DATABASE_PASSWORD)\
                     .replace("host",database_settings.DATABASE_HOST)\
-                    .replace("port",database_settings.DATABASE_PORT)
-    return conection_string                                                                                
+                    .replace("port",database_settings.DATABASE_PORT)\
+                    .replace("database_name",database_settings.DATABASE_NAME)
+    return conection_string                                                                              
+
+"""

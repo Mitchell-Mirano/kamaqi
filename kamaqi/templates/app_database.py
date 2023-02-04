@@ -1,16 +1,15 @@
+APP_DATABASE=\
+"""
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from app.settings import get_database_string_conection
+from {{app}}.settings import get_database_string_conection
 
 
-SQLALCHEMY_DATABASE_URL=get_database_string_conection()
+DATABASE_URL=get_database_string_conection()
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    encoding="utf-8",
-    echo=True
-)
+engine = create_engine(DATABASE_URL)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
@@ -22,3 +21,5 @@ def get_db():
         yield db
     finally:
         db.close()
+
+"""

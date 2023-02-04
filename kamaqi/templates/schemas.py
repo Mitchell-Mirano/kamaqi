@@ -1,3 +1,5 @@
+SCHEMAS=\
+"""
 from pydantic import BaseModel
 
 class {{app.capitalize()}}Create(BaseModel):
@@ -11,3 +13,4 @@ class {{app.capitalize()}}Update(BaseModel):
 
 class {{app.capitalize()}}Delete(BaseModel):
     pass
+"""

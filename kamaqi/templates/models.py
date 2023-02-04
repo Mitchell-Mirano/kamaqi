@@ -1,3 +1,5 @@
+MODELS=\
+"""
 from sqlalchemy import Column, Integer
 from database.database import Base
 
@@ -9,3 +11,4 @@ class {{app.capitalize()}}(Base):
     id = Column(Integer, primary_key=True, index=True)
     
 {% endfor %}
+"""

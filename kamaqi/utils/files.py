@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 def read_project_file():
-    with open("kamaqi/settings.json",mode="r") as f:
+    with open("kamaqi.json",mode="r") as f:
         data=json.load(f)
         f.close()
     
@@ -10,7 +10,7 @@ def read_project_file():
 
 def save_project_file(data:dict):
 
-    with open("kamaqi/settings.json", "w") as outfile:
+    with open("kamaqi.json", "w") as outfile:
         json.dump(data, outfile)
         outfile.close()
 
