@@ -12,7 +12,11 @@ TIME_DELTA=2
 {% if database_type!= 'SQLite' %}
 DATABASE_USER={{project_name}}_user
 DATABASE_PASSWORD={{project_name}}_password
+{% if project_type=='normal' %}
+DATABASE_HOST=localhost
+{% else %}
 DATABASE_HOST={{project_name}}_db
+{% endif %}
 DATABASE_NAME={{project_name}}_db
 {% if database_type == 'MySQL' %}
 DATABASE_PORT=3306
