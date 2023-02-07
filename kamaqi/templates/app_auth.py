@@ -1,7 +1,6 @@
 APP_AUTH=\
 """
 #Python
-import uuid
 from jose import jwt
 from pydantic.networks import EmailStr
 from passlib.context import CryptContext
@@ -18,14 +17,14 @@ from database import models
 from sqlalchemy.orm import Session
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/login/")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def verify_password(plain_password:str, hashed_password:str):
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def get_password_hash(password:str):
+def hash_password(password:str):
     return pwd_context.hash(password)
 
 def create_user_token(data: dict,tokens_config:TokensConfig):

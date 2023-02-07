@@ -2,16 +2,17 @@ CRUD=\
 """
 #Python
 from pydantic import EmailStr
+from fastapi import HTTPException,status
 
 #{{app.capitalize()}}
-from {{app}}s.schemas import {{app.capitalize()}}Create
+from {{app}}s.schemas import {{app.capitalize()}}Create, {{app.capitalize()}}Update
 
 #Database
 from sqlalchemy.orm import Session
-from database.models import {{app.capitalize()}}
+from database import models
 
-def create_{{app}}(db: Session, 
-                {{app}}:{{app.capitalize()}}Create):
+def insert_{{app}}(db: Session, 
+                      {{app}}:{{app.capitalize()}}Create):
 
     {{app}}_dict = {{app}}.dict()
 
@@ -22,8 +23,42 @@ def create_{{app}}(db: Session,
 
     return db_{{app}}
 
-def get_{{app}}_by_id(db: Session, id: int):
+def select_{{app}}_by_id(db: Session, id: int):
 
-    return db.query(models.{{app.capitalize()}})\\
-           .filter(models.{{app.capitalize()}}.id == id).first()
+    db_{{app}}= db.query(models.{{app.capitalize()}})\\
+                .filter(models.{{app.capitalize()}}.id == id)\\
+                .first()
+
+    if not db_{{app}}:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="{{app}} not found")
+
+    return db_{{app}}
+
+def select_all_{{app}}s(db:Session):
+
+    db_{{app}}s= db.query(models.{{app.capitalize()}}).all()
+
+    if not db_{{app}}s:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="{{app}}s not found")
+
+    return db_{{app}}s
+
+def update_{{app}}_in_db(db: Session, id: int, 
+                        {{app}}:{{app.capitalize()}}Update):
+
+    db_{{app}} = select_{{app}}_by_id(db, id)
+
+    db_{{app}}.name={{app}}.name
+    db.add(db_{{app}})
+    db.commit()
+    db.refresh(db_{{app}})
+
+    return db_{{app}}
+
+def delete_{{app}}_in_db(db: Session, id: int):
+    
+    db_user = select_{{app}}_by_id(db, id)
+
+    db.delete(db_user)
+    db.commit()
 """

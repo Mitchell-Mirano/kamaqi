@@ -7,8 +7,11 @@ from {{app}}.settings import get_database_string_conection
 
 
 DATABASE_URL=get_database_string_conection()
-
+{% if database_type=='SQLite' %}
+engine = create_engine(DATABASE_URL,connect_args={"check_same_thread": False})
+{% else %}
 engine = create_engine(DATABASE_URL)
+{% endif %}
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

@@ -28,19 +28,6 @@ class TokensConfig(BaseSettings):
 def get_tokens_config()->TokensConfig:
     return TokensConfig()
 
-class FileSettings(BaseSettings):
-    DF_COLUMNS:str
-
-    def get_df_columns(self)->list[str]:
-        return [column.strip() for column in self.DF_COLUMNS.split(',')]
-
-    class Config:
-        env_file = ".env"
-
-@lru_cache()
-def get_file_settings()->FileSettings:
-    return FileSettings()
-
 class EmailsSettings(BaseSettings):
     MAIL_USERNAME:str
     MAIL_PASSWORD:str
@@ -71,13 +58,22 @@ class DatabaseSettings(BaseSettings):
         env_file = ".env"
 
 def get_database_string_conection():
+    {% if database_type == "SQLite" %}
+    connection_string="sqlite:///./sql_{{app}}.db"
+    {% else %}
     database_settings=DatabaseSettings()
-    conection_string="postgresql+psycopg2://user:password@host:port/database_name"
-    conection_string=conection_string.replace("user",database_settings.DATABASE_USER)\
-                    .replace("password",database_settings.DATABASE_PASSWORD)\
-                    .replace("host",database_settings.DATABASE_HOST)\
-                    .replace("port",database_settings.DATABASE_PORT)\
-                    .replace("database_name",database_settings.DATABASE_NAME)
-    return conection_string                                                                              
-
+    {% if database_type == "PostgreSQL" %}
+    connection_string="postgresql+psycopg2://user:password@host:port/database_name"
+    {% endif %}
+    {% if database_type == "MySQL" %}
+    connection_string="mysql+pymysql://user:password@host:port/database_name"
+    {% endif %}
+    connection_string=connection_string\\
+                      .replace("user",database_settings.DATABASE_USER)\\
+                      .replace("password",database_settings.DATABASE_PASSWORD)\\
+                      .replace("host",database_settings.DATABASE_HOST)\\
+                      .replace("port",database_settings.DATABASE_PORT)\\
+                      .replace("database_name",database_settings.DATABASE_NAME)
+    {% endif %}  
+    return connection_string
 """

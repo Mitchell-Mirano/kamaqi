@@ -9,18 +9,25 @@ JMV_ALGORITHM=HS256
 TIME_DELTA=2
 
 #db config local
-DATABASE_USER={{project_name}}
-DATABASE_PASSWORD={{project_name}}password
+{% if database_type!= 'SQLite' %}
+DATABASE_USER={{project_name}}_user
+DATABASE_PASSWORD={{project_name}}_password
 DATABASE_HOST={{project_name}}_db
 DATABASE_NAME={{project_name}}_db
+{% if database_type == 'MySQL' %}
+DATABASE_PORT=3306
+{% endif %}
+{% if database_type == 'PostgreSQL' %}
 DATABASE_PORT=5432
+{% endif %}
+{% endif %}
 
 #db config production
 #DATABASE_USER=
 #DATABASE_PASSWORD=
 #DATABASE_HOST=
 #DATABASE_NAME=
-#DATABASE_PORT=5432
+#DATABASE_PORT=
 
 #email settings
 #MAIL_USERNAME=

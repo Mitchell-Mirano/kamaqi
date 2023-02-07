@@ -3,14 +3,15 @@ SCHEMAS=\
 from pydantic import BaseModel
 
 class {{app.capitalize()}}Create(BaseModel):
-    pass
+    name:str
 
 class {{app.capitalize()}}Read(BaseModel):
-    pass
+    id:int
+    name:str
+
+    class Config:
+        orm_mode = True
 
 class {{app.capitalize()}}Update(BaseModel):
-    pass
-
-class {{app.capitalize()}}Delete(BaseModel):
-    pass
+    name:str
 """

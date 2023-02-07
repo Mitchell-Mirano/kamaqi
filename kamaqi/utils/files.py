@@ -32,3 +32,9 @@ def add_template_file(path:Path,data:str):
     with open(path, "w") as outfile:
         outfile.write(data)
         outfile.close()
+
+def add_kamaqi_file(path:Path,data:dict):
+
+    with open(path, "w") as outfile:
+        json.dump(data, outfile)
+        outfile.close()
