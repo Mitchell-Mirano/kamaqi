@@ -9,9 +9,10 @@ from kamaqi.utils.files import add_kamaqi_file
 from kamaqi.app.settings import choose_project_type
 from kamaqi.app.settings import choose_database_type
 
-app = Typer()
+app = Typer(help="Init and configure your project")
 
-@app.command(name="project")
+@app.command(name="project",
+            help="Init your project")
 def set_project_path(project_name:str):
 
     project_path = Path(f"{os.getcwd()}/{project_name}")

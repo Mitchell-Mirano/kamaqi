@@ -7,7 +7,7 @@ from kamaqi.show import show
 from kamaqi.remove import remove
 from kamaqi.upgrade import upgrade
 
-app = typer.Typer(help="A command line app to FastAPI")
+app = typer.Typer(help="A command line app for creating APIs with FastAPI")
 
 __version__ ="0.1.0"
 

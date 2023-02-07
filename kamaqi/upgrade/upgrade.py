@@ -5,10 +5,11 @@ from kamaqi.utils.files import add_template_file,read_project_file
 from kamaqi.app.settings import get_kamaqi_template
 
 
-app=typer.Typer()
+app=typer.Typer(help="Create files for your apps")
 
 
-@app.command(name="app")
+@app.command(name="app",
+             help="Create files for an app")
 def upgrade_app(app_name:str):
 
     project_file = read_project_file()
@@ -43,7 +44,8 @@ def upgrade_app(app_name:str):
     add_template_file(f"{base_dir_files}/database/models.py",template_text)
  
 
-@app.command(name="apps")
+@app.command(name="apps",
+             help="Create files for multiple apps")
 def upgrade_apps():
 
     project_file = read_project_file()

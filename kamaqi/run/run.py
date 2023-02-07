@@ -2,9 +2,10 @@ from typer import Typer
 import os
 from kamaqi.utils.files import read_project_file
 
-app = Typer()
+app = Typer(help="Run your project")
 
-@app.command(name="project")
+@app.command(name="project",
+             help="Run your project")
 def run_project():
 
     project_file = read_project_file()

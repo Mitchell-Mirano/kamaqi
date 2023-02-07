@@ -1,1 +1,1 @@
-A comand line app to FastAPI inspired in Artisan from Laravel and manage.py from Django
+A command line app for creating APIs with FastAPI, inspired in Artisan from Laravel and manage.py from Django
