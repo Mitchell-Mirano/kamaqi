@@ -18,7 +18,7 @@ pip install kamaqi
 ```
 ## Basic Usage:
 
-### Init yout project:
+### Init your project:
 
 Run
 ```bash
