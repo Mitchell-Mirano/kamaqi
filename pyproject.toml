@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kamaqi"
-version = "0.1.0"
+version = "0.1.1"
 description = "A comand line app"
 authors = ["Mitchell Mirano <mitchellmirano25@gmail.com>"]
 license = "MIT"

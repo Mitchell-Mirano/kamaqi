@@ -96,10 +96,10 @@ def set_project_path(project_name:str):
             os.system("docker-compose stop")
             os.system("docker container prune --force")
             os.system("docker system prune --force")
-            os.system(f"docker image rm {project_name}_image:latest")
+            os.system(f"docker image rm {project_name.lower()}_image:latest")
         except:
             pass
-        os.system(f"docker build  -t {project_name}_image .")
+        os.system(f"docker build  -t {project_name.lower()}_image .")
 
     if project_type=="normal":
         print(" Creating  a virtual environment ...")

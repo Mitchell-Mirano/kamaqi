@@ -30,7 +30,7 @@ services:
 
   {{project_name}}:
     container_name: {{project_name}}_api
-    image: {{project_name}}_image
+    image: {{project_name.lower()}}_image
     volumes:
       - ./src:/{{project_name}}
     ports:
