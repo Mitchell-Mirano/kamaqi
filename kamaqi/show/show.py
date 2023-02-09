@@ -10,5 +10,10 @@ def list_apps():
     
     project_file = read_project_file()
     project_apps = project_file["apps"]
-    for app in project_apps:
-        print(f">> {app}")
+    print(project_apps)
+
+@app.command(name="config",
+            help="Show kamaqi.json")
+def show_config():
+    project_file=read_project_file()
+    print(project_file)

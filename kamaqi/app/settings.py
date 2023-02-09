@@ -4,7 +4,7 @@ from jinja2 import Environment, BaseLoader
 from kamaqi.templates import app_auth,app_database,app_exceptions
 from kamaqi.templates import app_schemas,app_router,app_exceptions
 from kamaqi.templates import main,app_settings,env,requirements
-from kamaqi.templates import router,schemas,models,crud
+from kamaqi.templates import router,schemas,models,crud,model
 from kamaqi.templates import docker_file,docker_compose
 
 APP_NAME="kamaqi"
@@ -26,6 +26,7 @@ def get_kamaqi_template(template_name:str):
         "router":router.ROUTER,
         "schemas":schemas.SCHEMAS,
         "models":models.MODELS,
+        "model":model.MODEL,
         "crud":crud.CRUD,
         "docker_file":docker_file.DOCKER_FILE,
         "docker_compose":docker_compose.DOCKER_COMPOSE,

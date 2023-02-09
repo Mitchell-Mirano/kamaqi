@@ -28,7 +28,7 @@ def set_project_path(project_name:str):
         "project_type":project_type,
         "database_type":database_type,
         "secret_key":secret_key,
-        "apps":[]
+        "apps":{project_name:{"status":"added"}}
         }
     
     base_dir_files=""
@@ -53,7 +53,7 @@ def set_project_path(project_name:str):
 
     for template_name in project_templates:
         template=get_kamaqi_template(f"app_{template_name}")
-        template_text=template.render(app=project_name,database_type=database_type)
+        template_text=template.render(**project_data)
 
         if template_name=="database":
             add_template_file(f"{base_dir_files}/database/{template_name}.py",template_text)
@@ -62,7 +62,7 @@ def set_project_path(project_name:str):
           
 
     template=get_kamaqi_template("models")
-    template_text=template.render(apps=[])
+    template_text=template.render(**project_data)
     add_template_file(f"{base_dir_files}/database/models.py",template_text)
 
     template=get_kamaqi_template("requirements")
@@ -76,7 +76,7 @@ def set_project_path(project_name:str):
     template_text=template.render(**project_data)
     add_template_file(f"{base_dir_files}/main.py",template_text)
   
-    project_data["apps"]=[project_name]
+    project_data["apps"][project_name]={"status":"upgraded"}
     del project_data["secret_key"]
     add_kamaqi_file(f"{str(project_path)}/kamaqi.json",project_data)
 

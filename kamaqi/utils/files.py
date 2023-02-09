@@ -11,7 +11,7 @@ def read_project_file():
 def save_project_file(data:dict):
 
     with open("kamaqi.json", "w") as outfile:
-        json.dump(data, outfile)
+        json.dump(data, outfile,indent=4)
         outfile.close()
 
 def create_empty_file(path:Path):

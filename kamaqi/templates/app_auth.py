@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer
 
 #App
-from {{app}}.settings import TokensConfig
+from {{project_name}}.settings import TokensConfig
 
 #Database
 from database import models

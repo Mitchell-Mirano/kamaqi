@@ -3,8 +3,7 @@ MAIN=\
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # Import routs
-from {{project_name}}.router import {{project_name}}_routs
-{%  for app in apps %}
+{%  for app in apps.keys() %}
 from {{app}}.router import {{app}}_routs
 {%  endfor %}
 
@@ -26,8 +25,7 @@ app.add_middleware(
     allow_headers=["*"])
 
 # Include routs
-app.include_router({{project_name}}_routs)
-{%  for app in apps %}
+{%  for app in apps.keys() %}
 app.include_router({{app}}_routs)
 {%  endfor %}
 """ 

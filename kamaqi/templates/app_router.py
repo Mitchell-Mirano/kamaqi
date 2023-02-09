@@ -2,12 +2,12 @@ APP_ROUTER=\
 """
 from fastapi import APIRouter,Depends
 from fastapi.responses import RedirectResponse
-from {{app}}.settings import {{app.capitalize()}}Settings,get_{{app}}_settings
+from {{project_name}}.settings import {{project_name.capitalize()}}Settings,get_{{project_name}}_settings
 
-{{app}}_routs= APIRouter()
+{{project_name}}_routs= APIRouter()
 
-@{{app}}_routs.get(path="/",
+@{{project_name}}_routs.get(path="/",
                    include_in_schema=False)
-def documentation({{app}}_settings:{{app.capitalize()}}Settings=Depends(get_{{app}}_settings)):
-    return RedirectResponse(url={{app}}_settings.BACKEND_HOST +"/docs/")
+def documentation({{project_name}}_settings:{{project_name.capitalize()}}Settings=Depends(get_{{project_name}}_settings)):
+    return RedirectResponse(url={{project_name}}_settings.BACKEND_HOST +"/docs/")
 """

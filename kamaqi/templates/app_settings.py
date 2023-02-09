@@ -7,14 +7,14 @@ from pydantic import EmailStr
 
 
 
-class {{app.capitalize()}}Settings(BaseSettings):
+class {{project_name.capitalize()}}Settings(BaseSettings):
     BACKEND_HOST:str
     class Config:
         env_file =".env"
 
 @lru_cache()
-def get_{{app}}_settings():
-    return {{app.capitalize()}}Settings()
+def get_{{project_name}}_settings():
+    return {{project_name.capitalize()}}Settings()
 
 
 class TokensConfig(BaseSettings):
