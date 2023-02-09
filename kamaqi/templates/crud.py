@@ -1,8 +1,6 @@
 CRUD=\
 """
 #Python
-from pydantic import EmailStr
-from fastapi import HTTPException,status
 
 #{{app.capitalize()}}
 from {{app}}s.schemas import {{app.capitalize()}}Create, {{app.capitalize()}}Update
@@ -34,10 +32,6 @@ def select_{{app}}_by_id(db: Session, id: int):
 def select_all_{{app}}s(db:Session):
 
     db_{{app}}s= db.query(models.{{app.capitalize()}}).all()
-
-    if not db_{{app}}s:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="{{app}}s not found")
-
     return db_{{app}}s
 
 def update_{{app}}_in_db(db: Session, id: int, 

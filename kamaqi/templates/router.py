@@ -1,7 +1,7 @@
 ROUTER=\
 """
 from typing import List
-from fastapi import APIRouter,Depends,status
+from fastapi import APIRouter,Depends,status,HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from database.database import get_db
@@ -22,7 +22,7 @@ from {{app}}s.crud import delete_{{app}}_in_db
                      response_model={{app.capitalize()}}Read,
                      status_code=status.HTTP_201_CREATED)
 async def create_{{app}}({{app}}_data:{{app.capitalize()}}Create,
-                         db:Session=Depends(get_db)):
+                        db:Session=Depends(get_db)):
 
     return insert_{{app}}(db,{{app}}_data)
 
@@ -31,14 +31,25 @@ async def create_{{app}}({{app}}_data:{{app.capitalize()}}Create,
                     response_model=List[{{app.capitalize()}}Read],
                     status_code=status.HTTP_200_OK)
 async def get_all_{{app}}s(db:Session=Depends(get_db)):
-    return select_all_{{app}}s(db)
+
+    db_{{app}}s=select_all_{{app}}s(db)
+    if not db_{{app}}s:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                            detail="{{app}}s not found")
+    
+    return db_{{app}}s
 
 @{{app}}s_routs.get(path="/get/{id}/",
                     tags=["{{app.capitalize()}}s"],
                     response_model={{app.capitalize()}}Read,
                     status_code=status.HTTP_200_OK)
 async def get_{{app}}(id:int,db:Session=Depends(get_db)):
-    return select_{{app}}_by_id(db,id)
+
+    db_{{app}}=select_{{app}}_by_id(db,id)
+    if not db_{{app}}:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                            detail="{{app}} not found")
+    return db_{{app}}
 
 @{{app}}s_routs.put(path="/update/{id}/",
                 tags=["{{app.capitalize()}}s"],
