@@ -28,10 +28,7 @@ def select_{{app}}_by_id(db: Session, id: int):
     db_{{app}}= db.query(models.{{app.capitalize()}})\\
                 .filter(models.{{app.capitalize()}}.id == id)\\
                 .first()
-
-    if not db_{{app}}:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="{{app}} not found")
-
+                
     return db_{{app}}
 
 def select_all_{{app}}s(db:Session):
