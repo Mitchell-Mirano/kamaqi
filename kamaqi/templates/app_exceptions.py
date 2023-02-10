@@ -53,8 +53,4 @@ registred_user_exception=HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
 unauthorized_user_exeption=HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                            detail="Unautorized user",
                            headers={"WWW-Authenticate": "Bearer"})
-
-not_found_network_exeption=HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                           detail="Tu compania no eligio esta red",
-                           headers={"WWW-Authenticate": "Bearer"})
 """
