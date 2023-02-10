@@ -1,6 +1,6 @@
 # Kamaqi
 
-A command line app for creating APIs with FastAPI, inspired in Artisan from Laravel and manage.py from Django.
+A command line app for creating Backends with FastAPI, inspired in Artisan from Laravel and manage.py from Django.
 
 ## The key features are:
 
@@ -11,52 +11,65 @@ A command line app for creating APIs with FastAPI, inspired in Artisan from Lara
 
 ## Installation:
 
-Install Kamaqi in the global environment
-
+Install Kamaqi in the global environment.
 ```bash 
 pip install kamaqi
+```
+For explore Kamaqi commands and options use.
+```bash
+kamaqi --help 
+kamaqi command --help
 ```
 ## Basic Usage:
 
 ### Init your project:
-
-Run
 ```bash
 kamaqi init project you_project_name
 ```
-Add choose the options, for setting your project.
+Choose the options, for setting your project. Remember for create projects
+with docker requires **docker** and **docker-compose** installed.
 
 ### Run your project
-Run 
 ```bash
 cd your_project_name
 ```
 ```bash
 kamaqi run project you_project_name
 ```
-- Exploe your API documentation
+- Explore your API documentation
 - For default kamaqi use the port 8000
 - Open in your browser http://localhost:8000/docs
 ### Add apps to your project
-Run 
+Add an app 
 ```bash
-kamaqi add apps users products shops ... etc
+kamaqi add app users
+```
+Add multiple apps
+```bash
+kamaqi add apps users products sales... etc
 ```
 ### Create files for your apps
-Run 
 ```bash
 Kamaqi upgrade apps 
 ```
-- Refresh your editor files.
+- Refresh files in your editor.
 - Refresh your API documentation
+### Review your project settings
+```bash
+kamaqi show config
+```
+### Review your project apps
+```bash
+kamaqi show apps
+```
 
 ## Project Status
-- The project currently is development and will be
+- The project currently is in  development and will be
 bugs.
 
-- Your can contribute to this project, repoting bugs, writing documentation, writing tests, with pull requests ... etc.
+- Your can contribute to this project, reporting bugs, writing documentation, writing tests, with pull requests ... etc.
 
-For more information visit [github repository](https://github.com/Mitchell-Mirano/kamaqi)
+For more information visit [GitHub repository](https://github.com/Mitchell-Mirano/kamaqi)
 
 
 
