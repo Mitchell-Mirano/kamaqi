@@ -59,7 +59,7 @@ class DatabaseSettings(BaseSettings):
 
 def get_database_string_conection():
     {% if database_type == "SQLite" %}
-    connection_string="sqlite:///./sql_{{app}}.db"
+    connection_string="sqlite:///./sql_{{project_name}}.db"
     {% else %}
     database_settings=DatabaseSettings()
     {% if database_type == "PostgreSQL" %}
