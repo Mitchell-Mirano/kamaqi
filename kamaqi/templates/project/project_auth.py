@@ -1,4 +1,4 @@
-APP_AUTH=\
+PROJECT_AUTH=\
 """
 #Python
 from jose import jwt

@@ -1,4 +1,4 @@
-ENV=\
+PROJECT_ENV=\
 """
 #app settings
 BACKEND_HOST=http://localhost:8000

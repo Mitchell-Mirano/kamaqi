@@ -1,4 +1,4 @@
-APP_SETTINGS=\
+PROJECT_SETTINGS=\
 """
 from fastapi_mail import ConnectionConfig
 from functools import lru_cache

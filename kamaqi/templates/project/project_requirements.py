@@ -1,4 +1,4 @@
-REQUIREMENTS=\
+PROJECT_REQUIREMENTS=\
 """
 rich
 python-jose[cryptography]
@@ -9,6 +9,7 @@ pymysql
 psycopg2-binary
 {% endif %}
 SQLAlchemy
+alembic
 passlib[bcrypt]
 fastapi[all]
 fastapi-mail

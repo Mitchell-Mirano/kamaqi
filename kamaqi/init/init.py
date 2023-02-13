@@ -3,11 +3,13 @@ import subprocess
 from rich import print
 from typer import Typer
 from pathlib import Path
-from kamaqi.app.settings import get_kamaqi_template
 from kamaqi.utils.files import add_kamaqi_file
-from kamaqi.app.settings import choose_project_type
-from kamaqi.app.settings import choose_database_type
-
+from kamaqi.config.database import choose_database_type
+from kamaqi.config.project import choose_project_type
+from kamaqi.templates.get_templates import get_project_template
+from kamaqi.templates.get_templates import get_database_template
+from kamaqi.templates.get_templates import get_migration_template
+from kamaqi.templates.get_templates import get_docker_template
 app = Typer(help="Init and configure your project")
 
 
@@ -43,35 +45,47 @@ def set_project_path(project_name: str):
         project_path.joinpath(f"src/database").resolve().mkdir()
         base_dir_files = project_path.joinpath("src").resolve()
 
-    env_template = get_kamaqi_template("env")
+    env_template = get_project_template("env")
     env_text = env_template.render(**project_data)
     env_path = base_dir_files.joinpath(".env").resolve()
     env_path.write_text(env_text, encoding="utf-8")
 
-    project_templates = ["auth", "router", "settings", "schemas", "exceptions", "database"]
+    project_templates = ["auth", "router", "settings", "schemas", "exceptions"]
 
     for template_name in project_templates:
-        template = get_kamaqi_template(f"app_{template_name}")
+        template = get_project_template(template_name)
         template_text = template.render(**project_data)
-
-        file_path: Path
-        if template_name == "database":
-            file_path = base_dir_files.joinpath(f"database/{template_name}.py").resolve()
-        else:
-            file_path = base_dir_files.joinpath(f"{project_name}/{template_name}.py").resolve()
+        file_path = base_dir_files.joinpath(f"{project_name}/{template_name}.py").resolve()
         file_path.write_text(template_text, encoding="utf-8")
 
-    template = get_kamaqi_template("models")
-    template_text = template.render(**project_data)
-    file_path = base_dir_files.joinpath("database/models.py").resolve()
-    file_path.write_text(template_text, encoding="utf-8")
+    database_templates=["database","models"]
+    for template_name in database_templates:
+        template = get_database_template(template_name)
+        template_text = template.render(**project_data)
+        file_path = base_dir_files.joinpath(f"database/{template_name}.py").resolve()
+        file_path.write_text(template_text, encoding="utf-8")
 
-    template = get_kamaqi_template("requirements")
+    migrations_templates=["ini","env","script_py_mako"]
+    base_dir_files.joinpath("migrations").resolve().mkdir()
+    base_dir_files.joinpath("migrations/versions").resolve().mkdir()
+    for template_name in migrations_templates:
+        template = get_migration_template(template_name)
+        template_text =template.render(**project_data)
+        file_path: Path 
+        if template_name == "ini":
+            file_path = base_dir_files.joinpath("alembic.ini").resolve()
+        if template_name == "env":
+            file_path = base_dir_files.joinpath("migrations/env.py").resolve()
+        if template_name == "script_py_mako":
+            file_path = base_dir_files.joinpath("migrations/script.py.mako").resolve()                      
+        file_path.write_text(template_text,encoding="utf-8")
+
+    template = get_project_template("requirements")
     template_text = template.render(**project_data)
     file_path = project_path.joinpath("requirements.txt").resolve()
     file_path.write_text(template_text, encoding="utf-8")
 
-    template = get_kamaqi_template("main")
+    template = get_project_template("main")
     template_text = template.render(**project_data)
     file_path = base_dir_files.joinpath("main.py").resolve()
     file_path.write_text(template_text, encoding="utf-8")
@@ -85,11 +99,11 @@ def set_project_path(project_name: str):
 
     if project_type == "docker":
         print("Creating docker image...")
-        template = get_kamaqi_template("docker_file")
+        template = get_docker_template("docker_file")
         template_text = template.render(**project_data)
         file_path = project_path.joinpath("Dockerfile").resolve()
         file_path.write_text(template_text, encoding="utf-8")
-        template = get_kamaqi_template("docker_compose")
+        template = get_docker_template("docker_compose")
         template_text = template.render(**project_data)
         file_path = project_path.joinpath("docker-compose.yaml").resolve()
         file_path.write_text(template_text, encoding="utf-8")

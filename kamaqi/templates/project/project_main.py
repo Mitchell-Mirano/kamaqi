@@ -1,4 +1,4 @@
-MAIN=\
+PROJECT_MAIN=\
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,10 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 {%  for app in apps.keys() %}
 from {{app}}.router import {{app}}_routs
 {%  endfor %}
-
-from database import models
-from database.database import engine
-#models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="{{project_name.capitalize()}} API",
               description="A powerful API for {{project_name.capitalize()}} project",

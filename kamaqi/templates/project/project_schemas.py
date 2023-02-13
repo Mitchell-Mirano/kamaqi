@@ -1,4 +1,4 @@
-APP_SCHEMAS=\
+PROJECT_SCHEMAS=\
 """
 #Python
 from pydantic import BaseModel, EmailStr

@@ -1,4 +1,4 @@
-APP_ROUTER=\
+PROJECT_ROUTER=\
 """
 from fastapi import APIRouter,Depends
 from fastapi.responses import RedirectResponse

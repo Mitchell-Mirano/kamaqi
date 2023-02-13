@@ -1,4 +1,4 @@
-APP_EXCEPTIONS=\
+PROJECT_EXCEPTIONS=\
 """
 from fastapi import HTTPException,status
 
