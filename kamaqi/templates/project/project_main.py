@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # Import routs
 {%  for app in apps.keys() %}
-from {{app}}.router import {{app}}_routs
+from {{app}}.router import {{app}}_routes
 {%  endfor %}
 
 app = FastAPI(title="{{project_name.capitalize()}} API",
@@ -22,6 +22,6 @@ app.add_middleware(
 
 # Include routs
 {%  for app in apps.keys() %}
-app.include_router({{app}}_routs)
+app.include_router({{app}}_routes)
 {%  endfor %}
 """ 

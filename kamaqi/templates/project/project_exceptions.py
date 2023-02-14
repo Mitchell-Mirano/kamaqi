@@ -2,9 +2,9 @@ PROJECT_EXCEPTIONS=\
 """
 from fastapi import HTTPException,status
 
-diferent_passwords_exception=HTTPException(
+different_passwords_exception=HTTPException(
                              status_code=status.HTTP_400_BAD_REQUEST,
-                             detail="Not equal passwords")
+                             detail="Different passwords")
 
 credentials_exception = HTTPException(
                         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -33,9 +33,9 @@ email_not_found_exception=HTTPException(
                           headers={"WWW-Authenticate": "Bearer"})
 
 
-not_registred_user_exception=HTTPException(
+not_registered_user_exception=HTTPException(
                              status_code=status.HTTP_401_UNAUTHORIZED,
-                             detail="The user is not registred",
+                             detail="The user is not registered",
                              headers={"WWW-Authenticate": "Bearer"})
 
 invalid_code_exception=HTTPException(
@@ -47,10 +47,10 @@ inactive_user_exception=HTTPException(
                         status_code=status.HTTP_401_UNAUTHORIZED, 
                         detail="Inactive user")
 
-registred_user_exception=HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+registered_user_exception=HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                          detail="The user is already registered")
 
-unauthorized_user_exeption=HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                           detail="Unautorized user",
+unauthorized_user_exception=HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                           detail="Unauthorized user",
                            headers={"WWW-Authenticate": "Bearer"})
 """

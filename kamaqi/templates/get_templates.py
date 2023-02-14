@@ -7,7 +7,8 @@ from kamaqi.templates.project import project_router,project_main
 
 from kamaqi.templates.database import database, model,models
 
-from kamaqi.templates.migrations import migrations_env, migrations_ini, migrations_script_py_mako
+from kamaqi.templates.migrations import migrations_env, migrations_ini
+from kamaqi.templates.migrations import migrations_script_py_mako
 
 from kamaqi.templates.docker import docker_compose,docker_file
 

@@ -73,7 +73,6 @@ def upgrade_tables(message:str=typer.Option(...,"--message","-m")):
     if project_data["project_type"] == "normal":
         os.system(f"""alembic revision --autogenerate -m"{message}" """)
         os.system("alembic upgrade head")
-        #os.system(f"alembic revision --autogenerat -m{message}")
 
     if project_data["project_type"] == "docker":
         os.system(f"""docker-compose exec {project_name} alembic revision --autogenerate -m"{message}" """)

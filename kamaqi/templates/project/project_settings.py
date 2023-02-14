@@ -5,8 +5,6 @@ from functools import lru_cache
 from pydantic import BaseSettings
 from pydantic import EmailStr
 
-
-
 class {{project_name.capitalize()}}Settings(BaseSettings):
     BACKEND_HOST:str
     class Config:
@@ -57,7 +55,7 @@ class DatabaseSettings(BaseSettings):
     class Config:
         env_file = ".env"
 
-def get_database_string_conection():
+def get_database_string_connection():
     {% if database_type == "SQLite" %}
     connection_string="sqlite:///./sql_{{project_name}}.db"
     {% else %}
