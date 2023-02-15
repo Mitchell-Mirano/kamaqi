@@ -180,7 +180,7 @@ with docker requires **docker** and **docker-compose** installed.
 cd project_name
 ```
 ```bash
-kamaqi run project project_name
+kamaqi run project
 ```
 - Explore the FastAPI documentation.
 - For Kamaqi the default port is the 8000.
