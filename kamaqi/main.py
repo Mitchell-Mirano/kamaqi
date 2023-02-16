@@ -9,7 +9,7 @@ from kamaqi.upgrade import upgrade
 
 app = typer.Typer(help="A command line app for creating Backends with FastAPI")
 
-__version__ = "0.1.7"
+__version__ = "0.1.8"
 
 
 def version_callback(value: bool):
