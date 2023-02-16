@@ -1,0 +1,17 @@
+name: Poetry and PyPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  say_hello_world:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo a message
+        run: echo "hello world"
+        
+
+
+
