@@ -1,17 +1,21 @@
-name: Poetry and PyPI
+name: Publish to PyPI
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [ published ]
 
 jobs:
-  say_hello_world:
+  publish-to-PyPI:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Echo a message
-        run: echo "hello world"
-        
+      - name: Publish PyPi package
+        uses: code-specialist/pypi-poetry-publish@v1
+        with:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_REGISTRY_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+
 
 
 
