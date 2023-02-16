@@ -16,7 +16,13 @@ app = Typer(help="Init and configure your project")
 @app.command(name="project",
              help="Init your project")
 def set_project_path(project_name: str):
-    project_path = Path(f"{os.getcwd()}/{project_name}").resolve()
+
+    if project_name == ".":
+        project_path =  Path(f"{os.getcwd()}").resolve()
+        project_name = Path(project_path).resolve().parts[-1]
+    else:
+        project_path = Path(f"{os.getcwd()}/{project_name}").resolve()
+
     project_type = choose_project_type()
     database_type = choose_database_type(project_type)
 
@@ -34,7 +40,8 @@ def set_project_path(project_name: str):
 
     base_dir_files: Path
 
-    project_path.mkdir()
+    if not project_path.exists():
+        project_path.mkdir()
     if project_type == 'normal':
         project_path.joinpath(project_name).resolve().mkdir()
         project_path.joinpath("database").resolve().mkdir()
