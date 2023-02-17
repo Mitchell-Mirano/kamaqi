@@ -174,9 +174,14 @@ kamaqi command --help
 ```
 ## Basic Usage:
 
-### Init your project:
+### Init your project
+- Init project in a new directory
 ```bash
 kamaqi init project project_name
+```
+- Init project in the current directory
+```bash
+kamaqi init project .
 ```
 Choose the options, for setting your project. Remember for create projects
 with docker requires **docker** and **docker-compose** installed.
@@ -225,9 +230,9 @@ kamaqi upgrade tables -m"A description about your changes"
 and use the database environment variables
 or use the following parameters.
 ```bash
-DATABASE_USER = your_project_name_user
-DATABASE_PASSWORD = your_project_name_password
-DATABASE_NAME = your_project_name_db
+DATABASE_USER = project_name_user
+DATABASE_PASSWORD = project_name_password
+DATABASE_NAME = project_name_db
 DATABASE_PORT = MySQL 3306  and PostgreSQL 5432
 ```
 - For normal projects use your settings and in the .env and edit the connection parameters.
