@@ -1,6 +1,6 @@
 import typer
 from typing import Optional
-from kamaqi.init import init
+from kamaqi.start import start
 from kamaqi.run import run
 from kamaqi.add import add
 from kamaqi.show import show
@@ -22,13 +22,9 @@ def version_callback(value: bool):
 def main(version: Optional[bool] = typer.Option(None, "--version", callback=version_callback)):
     pass
 
-
-app.add_typer(init.app, name="init")
+app.add_typer(start.app, name="start")
 app.add_typer(run.app, name="run")
 app.add_typer(add.app, name="add")
 app.add_typer(show.app, name="show")
 app.add_typer(remove.app, name="remove")
 app.add_typer(upgrade.app, name="upgrade")
-
-if __name__ == "__main__":
-    app()

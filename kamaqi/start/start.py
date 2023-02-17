@@ -10,11 +10,12 @@ from kamaqi.templates.get_templates import get_project_template
 from kamaqi.templates.get_templates import get_database_template
 from kamaqi.templates.get_templates import get_migration_template
 from kamaqi.templates.get_templates import get_docker_template
-app = Typer(help="Init and configure your project")
+
+app = Typer(help="Start and configure your project")
 
 
 @app.command(name="project",
-             help="Init your project")
+             help="Start a project")
 def set_project_path(project_name: str):
 
     if project_name == ".":

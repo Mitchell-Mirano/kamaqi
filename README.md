@@ -175,13 +175,13 @@ kamaqi command --help
 ## Basic Usage:
 
 ### Init your project
-- Init project in a new directory
+- Start project in a new directory
 ```bash
-kamaqi init project project_name
+kamaqi start project project_name
 ```
-- Init project in the current directory
+- Start project in the current directory
 ```bash
-kamaqi init project .
+kamaqi start project .
 ```
 Choose the options, for setting your project. Remember for create projects
 with docker requires **docker** and **docker-compose** installed.
