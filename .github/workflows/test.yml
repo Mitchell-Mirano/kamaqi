@@ -14,3 +14,6 @@ jobs:
           fetch-depth: 0
       - name: echo files list 
         run: ls -al
+      - name: python version
+        run: python3 --version
+        
