@@ -6,11 +6,9 @@ from kamaqi.add import add
 from kamaqi.show import show
 from kamaqi.remove import remove
 from kamaqi.upgrade import upgrade
+from kamaqi import __version__
 
 app = typer.Typer(help="A command line app for creating Backends with FastAPI")
-
-__version__ = "0.1.9"
-
 
 def version_callback(value: bool):
     if value:
