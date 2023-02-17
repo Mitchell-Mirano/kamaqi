@@ -5,6 +5,9 @@ on:
     branches:
       - "main"
 
+permissions:
+  contents: read
+
 jobs:
   list-files:
     runs-on: ubuntu-latest
@@ -20,5 +23,15 @@ jobs:
         with:
           path: ~/.cache/pypoetry/virtualenvs
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-      - run: poetry --version
+      
+      - name: poetry config PyPI token
+        run: poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}
+
+      - name: Install python libraries
+        run: poetry install 
+
+      - name: publish to PyPI
+        run: poetry publish --build
+
+
       
