@@ -130,10 +130,23 @@ def set_project_path(project_name: str):
             os.system(f"docker image rm {project_name.lower()}_image:latest")
         finally:
             pass
+
+        print("Building  your project image")
         os.system(f"docker build -t {project_name.lower()}_image .")
 
     if project_type == "normal":
         print(" Creating  a virtual environment ...")
         os.system("python3 -m venv env")
+
+        env_path: Path
+        print("Installing dependencies")
+
+        if os.name == "posix":
+            env_path = Path("env/bin/activate").resolve()
+            os.system(f". {str(env_path)} && pip install -r requirements.txt")
         
+        if os.name == "nt":
+            env_path = Path("env/Scripts/activate").resolve()
+            os.system(f"{str(env_path)} && pip install -r requirements.txt")
+
     print(" Yor project was created successfully")
