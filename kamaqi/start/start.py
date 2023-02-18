@@ -17,9 +17,8 @@ app = Typer(help="Start and configure your project")
 @app.command(name="project",
              help="Start a project")
 def set_project_path(project_name: str):
-
     if project_name == ".":
-        project_path =  Path(f"{os.getcwd()}").resolve()
+        project_path = Path(f"{os.getcwd()}").resolve()
         project_name = Path(project_path).resolve().parts[-1]
     else:
         project_path = Path(f"{os.getcwd()}/{project_name}").resolve()
@@ -40,6 +39,7 @@ def set_project_path(project_name: str):
     }
 
     base_dir_files: Path
+    file_path: Path
 
     if not project_path.exists():
         project_path.mkdir()
@@ -55,8 +55,8 @@ def set_project_path(project_name: str):
 
     env_template = get_project_template("env")
     env_text = env_template.render(**project_data)
-    env_path = base_dir_files.joinpath(".env").resolve()
-    env_path.write_text(env_text, encoding="utf-8")
+    file_path = base_dir_files.joinpath(".env").resolve()
+    file_path.write_text(env_text, encoding="utf-8")
 
     project_templates = ["auth", "router", "settings", "schemas", "exceptions"]
 
@@ -66,27 +66,26 @@ def set_project_path(project_name: str):
         file_path = base_dir_files.joinpath(f"{project_name}/{template_name}.py").resolve()
         file_path.write_text(template_text, encoding="utf-8")
 
-    database_templates=["database","models"]
+    database_templates = ["database", "models"]
     for template_name in database_templates:
         template = get_database_template(template_name)
         template_text = template.render(**project_data)
         file_path = base_dir_files.joinpath(f"database/{template_name}.py").resolve()
         file_path.write_text(template_text, encoding="utf-8")
 
-    migrations_templates=["ini","env","script_py_mako"]
+    migrations_templates = ["ini", "env", "script_py_mako"]
     base_dir_files.joinpath("migrations").resolve().mkdir()
     base_dir_files.joinpath("migrations/versions").resolve().mkdir()
     for template_name in migrations_templates:
         template = get_migration_template(template_name)
-        template_text =template.render(**project_data)
-        file_path: Path 
+        template_text = template.render(**project_data)
         if template_name == "ini":
             file_path = base_dir_files.joinpath("alembic.ini").resolve()
         if template_name == "env":
             file_path = base_dir_files.joinpath("migrations/env.py").resolve()
         if template_name == "script_py_mako":
-            file_path = base_dir_files.joinpath("migrations/script.py.mako").resolve()                      
-        file_path.write_text(template_text,encoding="utf-8")
+            file_path = base_dir_files.joinpath("migrations/script.py.mako").resolve()
+        file_path.write_text(template_text, encoding="utf-8")
 
     template = get_project_template("requirements")
     template_text = template.render(**project_data)
@@ -101,7 +100,7 @@ def set_project_path(project_name: str):
     project_data["apps"][project_name] = {"status": "upgraded"}
     del project_data["secret_key"]
     project_file_path = project_path.joinpath("kamaqi.json").resolve()
-    add_kamaqi_file(project_file_path,project_data)
+    add_kamaqi_file(project_file_path, project_data)
 
     os.chdir(project_path)
 
@@ -121,7 +120,7 @@ def set_project_path(project_name: str):
             os.system("docker container prune --force")
             os.system("docker system prune --force")
             os.system(f"docker image rm {project_name.lower()}_image:latest")
-        except:
+        finally:
             pass
         os.system(f"docker build  -t {project_name.lower()}_image .")
 
@@ -129,11 +128,14 @@ def set_project_path(project_name: str):
         print(" Creating  a virtual environment ...")
         os.system("python3 -m venv env")
 
-        if os.name=="posix":
-            os.system("source env/bin/activate")
+        python_venv_path: Path
+        if os.name == "posix":
+            python_venv_path = Path("./env/bin/activate").resolve()
+            os.system(f"source {python_venv_path}")
 
-        if os.name=="nt":
-            os.system(f".\env\Scripts\\activate")
+        if os.name == "nt":
+            python_venv_path = Path("./env/Scripts/activate").resolve()
+            os.system(python_venv_path)
 
         os.system("pip install -r requirements.txt")
 

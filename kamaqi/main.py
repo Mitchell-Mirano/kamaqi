@@ -10,6 +10,7 @@ from kamaqi import __version__
 
 app = typer.Typer(help="A command line app for creating Backends with FastAPI")
 
+
 def version_callback(value: bool):
     if value:
         print(f"Kamaqi version: {__version__}")
@@ -18,7 +19,9 @@ def version_callback(value: bool):
 
 @app.callback()
 def main(version: Optional[bool] = typer.Option(None, "--version", callback=version_callback)):
-    pass
+    if version:
+        print(f"Kamaqi version: {__version__}")
+
 
 app.add_typer(start.app, name="start")
 app.add_typer(run.app, name="run")
