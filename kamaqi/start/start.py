@@ -17,6 +17,8 @@ app = Typer(help="Start and configure your project")
 @app.command(name="project",
              help="Start a project")
 def set_project_path(project_name: str):
+
+    print("Setting project path ...")
     if project_name == ".":
         project_path = Path(f"{os.getcwd()}").resolve()
         project_name = Path(project_path).resolve().parts[-1]
@@ -38,6 +40,7 @@ def set_project_path(project_name: str):
         "apps": {project_name: {"status": "added"}}
     }
 
+    print("Creating project directories...")
     base_dir_files: Path
     file_path: Path
 
@@ -53,11 +56,13 @@ def set_project_path(project_name: str):
         project_path.joinpath(f"src/database").resolve().mkdir()
         base_dir_files = project_path.joinpath("src").resolve()
 
+    print("Setting environment variables...")
     env_template = get_project_template("env")
     env_text = env_template.render(**project_data)
     file_path = base_dir_files.joinpath(".env").resolve()
     file_path.write_text(env_text, encoding="utf-8")
 
+    print("Creating project files...")
     project_templates = ["auth", "router", "settings", "schemas", "exceptions"]
 
     for template_name in project_templates:
@@ -66,6 +71,7 @@ def set_project_path(project_name: str):
         file_path = base_dir_files.joinpath(f"{project_name}/{template_name}.py").resolve()
         file_path.write_text(template_text, encoding="utf-8")
 
+    print("Setting database ...")
     database_templates = ["database", "models"]
     for template_name in database_templates:
         template = get_database_template(template_name)
@@ -73,6 +79,7 @@ def set_project_path(project_name: str):
         file_path = base_dir_files.joinpath(f"database/{template_name}.py").resolve()
         file_path.write_text(template_text, encoding="utf-8")
 
+    print("Setting database migrations...")
     migrations_templates = ["ini", "env", "script_py_mako"]
     base_dir_files.joinpath("migrations").resolve().mkdir()
     base_dir_files.joinpath("migrations/versions").resolve().mkdir()
@@ -87,6 +94,7 @@ def set_project_path(project_name: str):
             file_path = base_dir_files.joinpath("migrations/script.py.mako").resolve()
         file_path.write_text(template_text, encoding="utf-8")
 
+    print("Setting python libraries ...")
     template = get_project_template("requirements")
     template_text = template.render(**project_data)
     file_path = project_path.joinpath("requirements.txt").resolve()
@@ -96,7 +104,7 @@ def set_project_path(project_name: str):
     template_text = template.render(**project_data)
     file_path = base_dir_files.joinpath("main.py").resolve()
     file_path.write_text(template_text, encoding="utf-8")
-
+    
     project_data["apps"][project_name] = {"status": "upgraded"}
     del project_data["secret_key"]
     project_file_path = project_path.joinpath("kamaqi.json").resolve()
@@ -105,7 +113,7 @@ def set_project_path(project_name: str):
     os.chdir(project_path)
 
     if project_type == "docker":
-        print("Creating docker image...")
+        print("Creating a docker image...")
         template = get_docker_template("docker_file")
         template_text = template.render(**project_data)
         file_path = project_path.joinpath("Dockerfile").resolve()
@@ -116,16 +124,16 @@ def set_project_path(project_name: str):
         file_path.write_text(template_text, encoding="utf-8")
 
         try:
-            subprocess.call("docker-compose stop",shell=True)
-            subprocess.call("docker container prune --force",shell=True)
-            subprocess.call("docker system prune --force",shell=True)
-            subprocess.call(f"docker image rm {project_name.lower()}_image:latest",shell=True)
+            os.system("docker-compose stop")
+            os.system("docker container prune --force")
+            os.system("docker system prune --force")
+            os.system(f"docker image rm {project_name.lower()}_image:latest")
         finally:
             pass
-        subprocess.call(f"docker build  -t {project_name.lower()}_image .")
+        os.system(f"docker build -t {project_name.lower()}_image .")
 
     if project_type == "normal":
         print(" Creating  a virtual environment ...")
-        subprocess.call("python3 -m venv env",shell=True)
+        os.system("python3 -m venv env")
         
     print(" Yor project was created successfully")
