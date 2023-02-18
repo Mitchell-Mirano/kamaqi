@@ -116,27 +116,16 @@ def set_project_path(project_name: str):
         file_path.write_text(template_text, encoding="utf-8")
 
         try:
-            os.system("docker-compose stop")
-            os.system("docker container prune --force")
-            os.system("docker system prune --force")
-            os.system(f"docker image rm {project_name.lower()}_image:latest")
+            subprocess.call("docker-compose stop",shell=True)
+            subprocess.call("docker container prune --force",shell=True)
+            subprocess.call("docker system prune --force",shell=True)
+            subprocess.call(f"docker image rm {project_name.lower()}_image:latest",shell=True)
         finally:
             pass
-        os.system(f"docker build  -t {project_name.lower()}_image .")
+        subprocess.call(f"docker build  -t {project_name.lower()}_image .")
 
     if project_type == "normal":
         print(" Creating  a virtual environment ...")
-        os.system("python3 -m venv env")
-
-        python_venv_path: Path
-        if os.name == "posix":
-            python_venv_path = Path("./env/bin/activate").resolve()
-            os.system(f"source {python_venv_path}")
-
-        if os.name == "nt":
-            python_venv_path = Path("./env/Scripts/activate").resolve()
-            os.system(python_venv_path)
-
-        os.system("pip install -r requirements.txt")
-
+        subprocess.call("python3 -m venv env",shell=True)
+        
     print(" Yor project was created successfully")
