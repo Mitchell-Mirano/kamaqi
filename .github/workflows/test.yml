@@ -29,8 +29,11 @@ jobs:
       - name: Install python libraries
         run: poetry install 
 
+      - name: Build kamaqi
+        run: poetry build
+        
       - name: publish to PyPI
-        run: poetry publish --build
+        run: poetry publish
 
 
       
