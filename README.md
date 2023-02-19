@@ -222,7 +222,7 @@ kamaqi show apps
 ### Database migrations
 For update your database tables.
 ```bash
-kamaqi upgrade tables -m"A description about your changes"
+kamaqi migrate tables -m"A description about your changes"
 ```
 ### To connect to MySQL or PostgreSQL database use.
 
