@@ -1,5 +1,7 @@
+import os 
 import typer
 from typing import Optional
+from kamaqi.utils.files import read_project_file
 from kamaqi.start import start
 from kamaqi.run import run
 from kamaqi.add import add
@@ -22,6 +24,17 @@ def version_callback(value: bool):
 def main(version: Optional[bool] = typer.Option(None, "--version", callback=version_callback)):
     if version:
         print(f"Kamaqi version: {__version__}")
+
+@app.command(name="exec",
+             help="Execute a command in the project container")
+def exec_a_comand(comand: str = typer.Argument("",help="The command to execute")):
+
+    if comand=="":
+        typer.Exit()
+    else:
+        project_data=read_project_file()
+        project_name=project_data["project_name"]
+        os.system(f"docker-compose exec {project_name} {comand}")
 
 
 app.add_typer(start.app, name="start")

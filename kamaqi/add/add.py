@@ -36,5 +36,24 @@ def create_apps(apps:List[str]):
     
     save_project_file(project_data)
 
+@app.command(name="dep",
+            help="Add a python dependency")
+def add_python_dependency(dependency:str):
+    
+    project_data=read_project_file()
+    project_type=project_data["project_type"]
+    project_name=project_data["project_name"]
+
+    if project_type == "normal":
+        os.system(f". ./env/bin/activate && pip install {dependency}")
+        os.system(f". ./env/bin/activate && pip freeze > requirements.txt")
+
+    if project_type == "docker":
+        os.system(f". ./env/bin/activate && pip install {dependency}")
+        os.system(f"docker-compose exec {project_name} pip install {dependency}")
+        os.system(f"docker-compose exec {project_name} pip freeze > requirements.txt")
+  
+
+
 
 
