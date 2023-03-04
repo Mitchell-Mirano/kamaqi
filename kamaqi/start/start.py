@@ -134,7 +134,6 @@ def set_project_path(project_name: str):
         print("Building  your project image")
         os.system(f"docker build -t {project_name.lower()}_image .")
         os.system(f"docker run {project_name.lower()}_image pip freeze > requirements.txt")
-        os.system("docker container prune --force")
         
     if project_type == "normal":
         print("Creating  a virtual environment ...")

@@ -1,6 +1,5 @@
 PROJECT_REQUIREMENTS=\
 """
-rich
 python-jose[cryptography]
 {% if database_type=='MySQL'%}
 pymysql

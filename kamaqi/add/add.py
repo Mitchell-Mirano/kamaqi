@@ -5,7 +5,7 @@ from typing import List
 
 from kamaqi.utils.files import read_project_file,save_project_file
 
-app=Typer(help="Add apps to your project")
+app=Typer(help="Add apps and python deps in your project")
 
 @app.command(name="app",
              help="Add an app to your project")
@@ -38,20 +38,37 @@ def create_apps(apps:List[str]):
 
 @app.command(name="dep",
             help="Add a python dependency")
-def add_python_dependency(dependency:str):
+def add_dep(dep:str):
     
     project_data=read_project_file()
     project_type=project_data["project_type"]
     project_name=project_data["project_name"]
 
     if project_type == "normal":
-        os.system(f". ./env/bin/activate && pip install {dependency}")
+        os.system(f". ./env/bin/activate && pip install {dep}")
         os.system(f". ./env/bin/activate && pip freeze > requirements.txt")
 
     if project_type == "docker":
-        os.system(f". ./env/bin/activate && pip install {dependency}")
-        os.system(f"docker-compose exec {project_name} pip install {dependency}")
-        os.system(f"docker-compose exec {project_name} pip freeze > requirements.txt")
+        os.system(f"docker-compose exec {project_name} pip3 install {dep}")
+        os.system(f"docker-compose exec {project_name} pip3 freeze > requirements.txt")
+
+@app.command(name="deps",
+            help="Add a multiple python dependencies")
+def add_deps(deps_list:List[str]):
+    
+    project_data=read_project_file()
+    project_type=project_data["project_type"]
+    project_name=project_data["project_name"]
+
+    deps_text =" ".join(deps_list)
+
+    if project_type == "normal":
+        os.system(f". ./env/bin/activate && pip install {deps_text}")
+        os.system(f". ./env/bin/activate && pip freeze > requirements.txt")
+
+    if project_type == "docker":
+        os.system(f"docker-compose exec {project_name} pip3 install {deps_text}")
+        os.system(f"docker-compose exec {project_name} pip3 freeze > requirements.txt")
   
 
 
