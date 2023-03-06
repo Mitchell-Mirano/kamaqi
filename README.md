@@ -213,7 +213,7 @@ For help on Kamaqi commands and parameters, use.
 kamaqi --help 
 kamaqi command --help
 ```
-### Init your project
+### Start your project
 - Start project in a new directory
 ```bash
 kamaqi start project project_name
@@ -229,12 +229,25 @@ with docker requires **docker** and **docker-compose** installed.
 ```bash
 cd project_name
 ```
+Execute the following commands
 ```bash
 kamaqi run project
 ```
+or 
+```bash
+kamaqi run project --build
+```
+If you works with docker the **--build** option makes a new image of your project before running. 
+
+This is useful if you added a python library to your project when your container was running and you don't want the library to be lost on the next run, because the library is not found in the image.
+
+For more information review [add a Python library](#adding-a-python-library-to-your-project) to your project.
+
 - Explore the FastAPI documentation.
 - For Kamaqi the default port is the 8000.
 - Open in your browser http://localhost:8000/docs
+
+
 ### Add apps to your project
 Add an app 
 ```bash
@@ -250,6 +263,7 @@ Kamaqi upgrade apps
 ```
 - Refresh files in your editor.
 - Refresh the FastAPI documentation.
+- Review the the **main.py** file.
 ### Review your project settings
 ```bash
 kamaqi show config
@@ -261,7 +275,7 @@ kamaqi show apps
 ### Database migrations
 For update your database tables.
 ```bash
-kamaqi migrate tables -m"A description about your changes"
+kamaqi migrate tables -m"A description about your changes in database/models.py"
 ```
 ### To connect to MySQL or PostgreSQL database use.
 
@@ -278,6 +292,51 @@ DATABASE_PORT = MySQL 3306  and PostgreSQL 5432
 
 - For SQLite databases use a editor extension or a other 
 software.
+
+### Adding a Python library to your project
+
+```bash
+kamaqi add dep python_library_name
+```
+or 
+```bash
+kamaqi add deps python_library_name1 python_library_name2
+```
+- In normal projects this comand add the **python_library_name** to the virtual environment(env)
+and updates the requirements.txt file.
+
+- In proyects with docker this command  add the
+**python_library_name** to the project container and
+updates the requirements.txt file.
+Then when you use the **--build** the new image of your project will be build with the new libraries.
+
+### Removing a Python library to your project
+
+```bash
+kamaqi remove dep python_library_name
+```
+or 
+```bash
+kamaqi remove deps python_library_name1 python_library_name2
+```
+- In normal projects this comand removes the **python_library_name** in the virtual environment(env)
+and updates the requirements.txt file.
+
+- In proyects with docker this command  removes the
+**python_library_name** in the project container and
+updates the requirements.txt file.
+Then when you use the **--build** the new image of your project will be build with the new libraries.
+
+### Executing a command in your project container
+
+```bash
+kamaqi exec "any Linux command" 
+```
+- **Kamaqi** use the **Ubuntu:latest** version to build your project image. For this reason you can execute any command of **Ubuntu**.
+
+- Remember that any change in the container at runtime will not be reflected in the project image.
+
+- This method is not recommended for adding python libraries to the container as it will not update the requirements.txt file
 
 ## Project Status
 - The project is currently under development and may contain errors.
