@@ -191,7 +191,15 @@ variables.
 - **database/models.py** contains your database models created with **SQLALchemy**, when your creates a new **app** kamaqi create a new basica model in the **models.py** file.
 
 
-## Installation:
+## **Installation**
+
+### Previous requirements
+- **Python 3.10** or higher.
+- **Kamaqi** is now developed and tested in Ubuntu and other Linux distributions.
+-If you use **Windows** is recommended has installed **WSL**.
+
+- Note: You can contribute to the development of **Kamaqi** by testing its
+operation in **Windows** and reporting possible errors to improve the tool.
 
 Install Kamaqi in the global environment.
 ```bash 
