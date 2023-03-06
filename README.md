@@ -1,6 +1,8 @@
 # **Kamaqi**
 A command line app for creating Backends with **FastAPI**, inspired in **Artisan** from **Laravel** and **manage.py** from **Django**.
 
+![](./kamaqi-image.png)
+
 # **Content**
 - [The key features are](#the-key-features-are)
 - [Installation](#installation)
