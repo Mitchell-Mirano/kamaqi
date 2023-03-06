@@ -1,21 +1,21 @@
-# Kamaqi
+# **Kamaqi**
 A command line app for creating Backends with **FastAPI**, inspired in **Artisan** from **Laravel** and **manage.py** from **Django**.
 
-# Content
+# **Content**
 - [The key features are](#the-key-features-are)
 - [Installation](#installation)
 - [Basic usage](#basic-usage)
 - [Project Status](#project-status)
 
-## The key features are:
+## **The key features are:**
 
-- Creates a normal project or a project with **Docker**.
+- Creates a normal project or a project with **Docker** and **docker-compose**.
 - Chooses a **MySQL**, **PostgreSQL** or **SQLite** database.
 - Works as with **Django** creating  apps.
 - Every application created with **Kamaqi** contains a minimum **CRUD**.
 - Integration between **SQLAlchemy** and **Alembic** for migrations.
 
-### What is an app?
+### **What is an app?**
 An application is a module of your project, which manages the logic of an actor of your application, for example (users, products, shops ... etc). Generally, an app is associated with a table in the database on which you want to do CRUD operations and they are named in the plural.
 
 
@@ -86,11 +86,22 @@ def insert_user(db: Session,
 This is just an example, in a real development environment, before
 inserting the user into the database should encrypt the password, check if the user is not registered...etc.
 
-### Project Structure
+### **Project Structure**
 
-When creates a new project with Kamaqi this can have the following structures.
+When working on a project with Kamaqi, it can have the following structures.
 
-- A projects with Docker following the next structure.
+It is very important to follow those structures to create applications, perform migrations, run your project and use all **Kamaqi** commands.
+
+Otherwise you could build the applications in an unwanted directory, not find the models.py file to add the models to, and also the migrations could fail.
+
+Let's remember that **FastAPI** is a microframework and therefore doesn't give you a project structure like **Django** would. That is why we are free to structure our project as we want.
+
+**Kamaqi** is a tool that will help you streamline your development processes, but in return you must respect its structure. For this reason we chose a structure similar to that of **Django** since this is a very mature framework and its way of working is one of the best.
+
+If you have suggestions for a better project structure or would like to contribute to the development of Kamaqi by adding new features, you can visit [Kamaqi GitHub](https://github.com/Mitchell-Mirano/kamaqi).
+
+
+- The projects with **Docker** following the next structure.
 
 ```bash
 project_name
@@ -114,6 +125,9 @@ project_name
     │   ├── crud.py
     │   ├── router.py
     │   └── schemas.py
+    .
+    .
+    .
     └── project_name
         ├── auth.py
         ├── exceptions.py
@@ -142,6 +156,9 @@ project_name
 │   ├── crud.py
 │   ├── router.py
 │   └── schemas.py
+.
+.
+.
 └── project_name
     ├── auth.py
     ├── exceptions.py
@@ -149,31 +166,45 @@ project_name
     ├── schemas.py
     └── settings.py
 ```
-- In normal projects the env directory is the
-Python virtual environment.
+- In the projects with docker **db_volume/** is the directory where is saved your database data.
 
-- The .env file contains the environment
+- The **Kamaqi.json** file contains the metadata of your project, this file is very important because **Kamaqi** uses it to execute some commands.
+
+- In normal projects the **env/** directory is the
+**Python** virtual environment.
+
+- The **.env** file contains the environment
 variables.
 
-- The project_name is the main app in to the project.
-- **auth.py** contains functions for hashing passwords, verify passwords and create access tokens. 
-- **exceptions.py** contains some exceptions.
-- **settings.py** contains classes and functions that provide environment variables like secret keys, database connection parameters...etc. These variables are taken from the .env file.
+- The **migrations/** directory contains the settings for make migrations with **Alembic**.
+
+- The **project_name/** is the main app in to the project.
+
+- **project_name/auth.py** contains functions for hashing passwords, verify passwords and create access tokens. 
+
+- **project_name/exceptions.py** contains some exceptions.
+
+- **project_name/settings.py** contains classes and functions that provide environment variables like secret keys, database connection parameters...etc. These variables are taken from the .env file.
+
+- **database/database.py** contains code for connecting to the database.
+
+- **database/models.py** contains your database models created with **SQLALchemy**, when your creates a new **app** kamaqi create a new basica model in the **models.py** file.
 
 
 ## Installation:
 
 Install Kamaqi in the global environment.
 ```bash 
-pip install kamaqi
+pip3 install kamaqi
 ```
+
+## Basic Usage:
+
 For help on Kamaqi commands and parameters, use.
 ```bash
 kamaqi --help 
 kamaqi command --help
 ```
-## Basic Usage:
-
 ### Init your project
 - Start project in a new directory
 ```bash
