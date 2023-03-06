@@ -51,6 +51,7 @@ def set_project_path(project_name: str):
         project_path.joinpath("database").resolve().mkdir()
         base_dir_files = project_path
     else:
+        project_path.joinpath("db_volume").resolve().mkdir()
         project_path.joinpath("src").resolve().mkdir()
         project_path.joinpath(f"src/{project_name}").resolve().mkdir()
         project_path.joinpath(f"src/database").resolve().mkdir()
