@@ -113,6 +113,15 @@ def set_project_path(project_name: str):
 
     os.chdir(project_path)
 
+    print("Setting git config...")
+
+    os.system("git init")
+    template = get_project_template("gitignore")
+    template_text = template.render(**project_data)
+    file_path = project_path.joinpath(".gitignore").resolve()
+    file_path.write_text(template_text, encoding="utf-8")
+    os.system("git add .gitignore")
+
     if project_type == "docker":
         print("Creating a docker image...")
         template = get_docker_template("docker_file")

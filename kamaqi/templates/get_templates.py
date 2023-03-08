@@ -4,6 +4,7 @@ from kamaqi.templates.project import project_requirements,project_env
 from kamaqi.templates.project import project_auth, project_exceptions
 from kamaqi.templates.project import project_schemas, project_settings
 from kamaqi.templates.project import project_router,project_main
+from kamaqi.templates.project import project_gitignore
 
 from kamaqi.templates.database import database, model,models
 
@@ -27,6 +28,7 @@ def get_project_template(template_name:str):
         "auth":project_auth.PROJECT_AUTH,
         "env":project_env.PROJECT_ENV,
         "main":project_main.PROJECT_MAIN,
+        "gitignore":project_gitignore.PROJECT_GITIGNORE,
     }
 
     template=environment.from_string(templates_dict[template_name])
