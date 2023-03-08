@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kamaqi"
-version = "0.2.1"
+version = "0.2.2"
 description = "A command line app for creating Backends with FastAPI"
 authors = ["Mitchell Mirano <mitchellmirano25@gmail.com>"]
 license = "MIT"
