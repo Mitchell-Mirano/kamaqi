@@ -18,10 +18,10 @@ jobs:
         with:
           python-version: '3.10' 
       - uses: Gr1N/setup-poetry@v8
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pypoetry/virtualenvs
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+      # - uses: actions/cache@v2
+      #   with:
+      #     path: ~/.cache/pypoetry/virtualenvs
+      #     key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
       
       - name: poetry config PyPI token
         run: poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}
@@ -33,7 +33,7 @@ jobs:
         run: poetry build
         
       - name: publish to PyPI
-        run: poetry publish
+        run: poetry publish --build
 
 
       
