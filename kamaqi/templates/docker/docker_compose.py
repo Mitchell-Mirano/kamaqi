@@ -29,7 +29,7 @@ services:
     {% endif %}
 
   {{project_name}}:
-    container_name: {{project_name}}_api
+    container_name: {{project_name}}
     image: {{project_name.lower()}}_image
     volumes:
       - ./src:/{{project_name}}
