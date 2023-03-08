@@ -10,11 +10,9 @@ from sqlalchemy.orm import Session
 from database import models
 
 def insert_{{app}}(db: Session, 
-                      {{app}}:{{app.capitalize()}}Create):
+                 {{app}}:{{app.capitalize()}}Create):
 
-    {{app}}_dict = {{app}}.dict()
-
-    db_{{app}} = models.{{app.capitalize()}}(**{{app}}_dict)
+    db_{{app}} = models.{{app.capitalize()}}(**{{app}}.dict())
     db.add(db_{{app}})
     db.commit()
     db.refresh(db_{{app}})
