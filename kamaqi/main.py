@@ -27,7 +27,7 @@ def main(version: Optional[bool] = typer.Option(None, "--version", callback=vers
 
 @app.command(name="exec",
              help="Execute a command in the project container")
-def exec_a_comand(comand: str = typer.Argument("",help="The command to execute")):
+def exec_a_comand(comand: str = typer.Argument("",help="Any Linux comand(Ubuntu).")):
 
     if comand=="":
         typer.Exit()

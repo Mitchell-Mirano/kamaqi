@@ -4,10 +4,10 @@ from typing import List
 from kamaqi.utils.files import read_project_file, save_project_file
 
 
-app=Typer(help="Remove apps and python deps in your project")
+app=Typer(help="Remove apps and python deps")
 
 @app.command(name="app",
-             help="Remove an app from your project")
+             help="Remove an app")
 def remove_app(app_name:str):
 
     project_data=read_project_file()
@@ -19,7 +19,7 @@ def remove_app(app_name:str):
     save_project_file(project_data)
 
 @app.command(name="apps",
-             help="Remove multiple apps from your project")
+             help="Remove multiple apps")
 def remove_apps(apps:List[str]):
 
     project_data=read_project_file()
@@ -33,7 +33,7 @@ def remove_apps(apps:List[str]):
     save_project_file(project_data)
 
 @app.command(name="dep",
-            help="Romeve a python dependency")
+            help="Romeve a python dep")
 def remove_dep(dep:str):
     project_data=read_project_file()
     proyect_type = project_data["project_type"]
@@ -48,7 +48,7 @@ def remove_dep(dep:str):
         os.system(f"docker-compose exec {project_name} pip3 uninstall > requirements.txt")
 
 @app.command(name="deps",
-            help="Remove  multiple python dependencies")
+            help="Remove  multiple python deps")
 def add_deps(deps_list:List[str]):
     
     project_data=read_project_file()

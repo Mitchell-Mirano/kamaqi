@@ -5,10 +5,10 @@ from typing import List
 
 from kamaqi.utils.files import read_project_file,save_project_file
 
-app=Typer(help="Add apps and python deps in your project")
+app=Typer(help="Add apps and python deps")
 
 @app.command(name="app",
-             help="Add an app to your project")
+             help="Add an app")
 def create_app(app_name:str):
 
     project_data=read_project_file()
@@ -22,7 +22,7 @@ def create_app(app_name:str):
     save_project_file(project_data)
 
 @app.command(name="apps",
-            help="Add multiple apps to your project")
+            help="Add multiple apps")
 def create_apps(apps:List[str]):
 
     project_data=read_project_file()
@@ -37,7 +37,7 @@ def create_apps(apps:List[str]):
     save_project_file(project_data)
 
 @app.command(name="dep",
-            help="Add a python dependency")
+            help="Add a python dep")
 def add_dep(dep:str):
     
     project_data=read_project_file()
@@ -53,7 +53,7 @@ def add_dep(dep:str):
         os.system(f"docker-compose exec {project_name} pip3 freeze > requirements.txt")
 
 @app.command(name="deps",
-            help="Add a multiple python dependencies")
+            help="Add a multiple python deps")
 def add_deps(deps_list:List[str]):
     
     project_data=read_project_file()

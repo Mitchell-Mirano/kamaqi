@@ -3,10 +3,10 @@ from rich import print
 from rich.table import Table
 from kamaqi.utils.files import read_project_file
 
-app=Typer(help="Show apps, endpoints and models")
+app=Typer(help="Show apps and the project config")
 
 @app.command(name="apps",
-             help="Show apps and their metadata")
+             help="Show apps")
 def list_apps():
 
     project_file = read_project_file()
