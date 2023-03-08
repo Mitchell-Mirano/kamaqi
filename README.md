@@ -195,27 +195,29 @@ variables.
 
 ## **Installation**
 
-### Previous requirements
+### **Previous requirements**
 - **Python 3.10** or higher.
-- **Kamaqi** is now developed and tested in Ubuntu and other Linux distributions.
--If you use **Windows** is recommended has installed **WSL**.
 
-- Note: You can contribute to the development of **Kamaqi** by testing its
-operation in **Windows** and reporting possible errors to improve the tool.
+- **Kamaqi** is now developed and tested in Ubuntu and other Linux distributions.
+
+- If you use **Windows** is recommended has installed **WSL**.
+
+- Note: You can contribute to the development of **Kamaqi** by testing its operation in **Windows** and reporting possible errors to improve the tool.
 
 Install Kamaqi in the global environment.
 ```bash 
 pip3 install kamaqi
 ```
 
-## Basic Usage:
+## **Basic Usage**
 
 For help on Kamaqi commands and parameters, use.
 ```bash
 kamaqi --help 
 kamaqi command --help
 ```
-### Start your project
+### **Start your project**
+
 - Start project in a new directory
 ```bash
 kamaqi start project project_name
@@ -224,10 +226,14 @@ kamaqi start project project_name
 ```bash
 kamaqi start project .
 ```
-Choose the options, for setting your project. Remember for create projects
-with docker requires **docker** and **docker-compose** installed.
+- Choose the options, for setting your project.
 
-### Run your project
+- If you choose a normal project and you don't have **MySQL** or **PostgreSQL** installed. it is recommended to select **SQLite** database.
+
+- Remember for create projects with docker requires **docker** and **docker-compose** installed.
+
+### **Run your project**
+
 ```bash
 cd project_name
 ```
@@ -250,7 +256,7 @@ For more information review [add a Python library](#adding-a-python-library-to-y
 - Open in your browser http://localhost:8000/docs
 
 
-### Add apps to your project
+### **Add apps to your project**
 Add an app 
 ```bash
 kamaqi add app users
@@ -259,32 +265,35 @@ Add multiple apps
 ```bash
 kamaqi add apps users products sales ... etc
 ```
-### Create files for your apps
+### **Create files for your apps**
 ```bash
 Kamaqi upgrade apps 
 ```
 - Refresh files in your editor.
 - Refresh the FastAPI documentation.
 - Review the the **main.py** file.
-### Review your project settings
+
+### **Review your project settings**
 ```bash
 kamaqi show config
 ```
-### Review your project apps
+### **Review your project apps**
 ```bash
 kamaqi show apps
 ```
-### Database migrations
+### **Database migrations**
+
 For update your database tables.
 ```bash
-kamaqi migrate tables -m"A description about your changes in database/models.py"
+kamaqi migrate tables -m"A small description about your changes in database/models.py"
 ```
-### To connect to MySQL or PostgreSQL database use.
+### **Connecting to database**
 
 - For projects with Docker, review the **docker-compose.yaml**
 and use the database environment variables
 or use the following parameters.
 ```bash
+DATABASE_HOST = localhost or project_name_db
 DATABASE_USER = project_name_user
 DATABASE_PASSWORD = project_name_password
 DATABASE_NAME = project_name_db
