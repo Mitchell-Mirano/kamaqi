@@ -2,13 +2,13 @@ PROJECT_SETTINGS=\
 """
 from fastapi_mail import ConnectionConfig
 from functools import lru_cache
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import EmailStr
 
 class {{project_name.capitalize()}}Settings(BaseSettings):
     BACKEND_HOST:str
-    class Config:
-        env_file =".env"
+    
+    model_config = SettingsConfigDict(env_file='.env', extra='ignore')
 
 @lru_cache()
 def get_{{project_name}}_settings():
@@ -19,8 +19,8 @@ class TokensConfig(BaseSettings):
     SECRET_KEY:str
     JMV_ALGORITHM:str
     TIME_DELTA:int
-    class Config:
-        env_file = ".env"
+    
+    model_config = SettingsConfigDict(env_file='.env', extra='ignore')
 
 @lru_cache()
 def get_tokens_config()->TokensConfig:
@@ -37,8 +37,7 @@ class EmailsSettings(BaseSettings):
     MAIL_SSL:bool
     TEMPLATE_FOLDER:str
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file='.env', extra='ignore')
 
 @lru_cache()
 def get_email_settings():
@@ -52,8 +51,8 @@ class DatabaseSettings(BaseSettings):
     DATABASE_HOST:str
     DATABASE_PORT:str
     DATABASE_NAME:str
-    class Config:
-        env_file = ".env"
+    
+    model_config = SettingsConfigDict(env_file='.env', extra='ignore')
 
 def get_database_string_connection():
     {% if database_type == "SQLite" %}
