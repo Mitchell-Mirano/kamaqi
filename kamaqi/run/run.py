@@ -23,11 +23,10 @@ def run_project(build: Optional[bool] = typer.Option(False, "--build","-b",help=
         env_path: Path
         if os.name == "posix":
             env_path = Path("env/bin/activate").resolve()
-            os.system(f". {str(env_path)} && uvicorn main:app --reload")
-        
         if os.name == "nt":
             env_path = Path("env/Scripts/activate").resolve()
-            os.system(f"{str(env_path)} && uvicorn main:app --reload")
+            
+        os.system(f". {str(env_path)} && uvicorn main:app --reload")
 
     if  project_file["project_type"] == "docker":
         if build:
