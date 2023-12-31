@@ -15,12 +15,11 @@ def upgrade_tables(message:str=typer.Option(...,"--message","-m")):
     if project_data["project_type"] == "normal":
         env_path: Path
         if os.name == "posix":
-            env_path = Path("env/bin/activate").resolve()
+            env_path = Path("./env/bin/activate").resolve()
         if os.name == "nt":
-            env_path = Path("env/Scripts/activate").resolve()
+            env_path = Path("./env/Scripts/activate").resolve()
 
-        os.system(f""". {str(env_path)}  && alembic revision --autogenerate -m"{message}" """)
-        os.system(f". {str(env_path)} alembic upgrade head")
+        os.system(f". {str(env_path)}  && alembic revision --autogenerate -m'{message}' && alembic upgrade head")
 
     if project_data["project_type"] == "docker":
         os.system(f"""docker-compose exec {project_name} alembic revision --autogenerate -m"{message}" """)
