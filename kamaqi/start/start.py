@@ -1,5 +1,5 @@
 import os
-import subprocess
+import secrets
 from rich import print
 from typer import Typer
 from pathlib import Path
@@ -28,8 +28,7 @@ def set_project_path(project_name: str):
     project_type = choose_project_type()
     database_type = choose_database_type(project_type)
 
-    secret_key = subprocess.run(['openssl', 'rand', '-hex', '32'], stdout=subprocess.PIPE)
-    secret_key = secret_key.stdout.decode('utf-8').split('\n')[0]
+    secret_key = secrets.token_hex(32)
 
     project_data = {
         "project_path": str(project_path),
