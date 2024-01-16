@@ -69,7 +69,7 @@ def add_deps(deps_list:List[str]):
             env_path = Path("./env/bin/activate").resolve()
             os.system(f". {str(env_path)} && pip uninstall {deps_text}")
             os.system(f". {str(env_path)} && pip freeze > requirements.txt")
-        if os.name == "nt":
+          if os.name == "nt":
             env_path = Path("./env/Scripts/activate").resolve()
             os.system(f"{str(env_path)} && pip uninstall {deps_text}")
             os.system(f"{str(env_path)} && pip freeze > requirements.txt")
