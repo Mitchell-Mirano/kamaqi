@@ -8,7 +8,8 @@ app=typer.Typer(help="Update your database")
 @app.command(name="tables",
              help="Upgrade your database tables")
 def upgrade_tables(message:str=typer.Option(...,"--message","-m")):
-
+    message = message.strip().split(" ")
+    message = "_".join([word for word in message if len(word) > 0])
     project_data:dict = read_project_file()
     project_name:str = project_data["project_name"]
 
