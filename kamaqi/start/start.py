@@ -146,18 +146,18 @@ def set_project_path(project_name: str):
         
     if project_type == "normal":
         print("Creating  a virtual environment ...")
-        os.system("python3 -m venv env")
-
-        env_path: Path
-        print("Installing dependencies")
 
         if os.name == "posix":
-            env_path = Path("env/bin/activate").resolve()
+            os.system("python3 -m venv env")
+            env_path = Path("./env/bin/activate").resolve()
+            print("Installing dependencies")
             os.system(f". {str(env_path)} && pip install -r requirements.txt")
             os.system(f". {str(env_path)} && pip freeze > requirements.txt")
             
         if os.name == "nt":
-            env_path = Path("env/Scripts/activate").resolve()
+            os.system("py -m venv env")
+            env_path = Path("./env/Scripts/activate").resolve()
+            print("Installing dependencies")
             os.system(f"{str(env_path)} && pip install -r requirements.txt")
             os.system(f"{str(env_path)} && pip freeze > requirements.txt")
 
