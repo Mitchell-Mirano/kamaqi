@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typer import Typer
 from typing import List
 from kamaqi.utils.files import read_project_file, save_project_file
@@ -40,8 +41,14 @@ def remove_dep(dep:str):
     project_name = project_data["project_name"]
 
     if proyect_type == "normal":
-        os.system(f". ./env/bin/activate && pip uninstall {dep}")
-        os.system(f". ./env/bin/activate && pip freeze > requirements.txt")
+        if os.name == "posix":
+            env_path = Path("./env/bin/activate").resolve()
+            os.system(f". {str(env_path)} && pip uninstall {dep}")
+            os.system(f". {str(env_path)} && pip freeze > requirements.txt")
+        if os.name == "nt":
+            env_path = Path("./env/Scripts/activate").resolve()
+            os.system(f"{str(env_path)} && pip uninstall {dep}")
+            os.system(f"{str(env_path)} && pip freeze > requirements.txt")
     
     if proyect_type == "docker":
         os.system(f"docker-compose exec {project_name} pip3 uninstall {dep}")
@@ -58,8 +65,14 @@ def add_deps(deps_list:List[str]):
     deps_text =" ".join(deps_list)
 
     if project_type == "normal":
-        os.system(f". ./env/bin/activate && pip uninstall {deps_text}")
-        os.system(f". ./env/bin/activate && pip freeze > requirements.txt")
+          if os.name == "posix":
+            env_path = Path("./env/bin/activate").resolve()
+            os.system(f". {str(env_path)} && pip uninstall {deps_text}")
+            os.system(f". {str(env_path)} && pip freeze > requirements.txt")
+        if os.name == "nt":
+            env_path = Path("./env/Scripts/activate").resolve()
+            os.system(f"{str(env_path)} && pip uninstall {deps_text}")
+            os.system(f"{str(env_path)} && pip freeze > requirements.txt")
 
     if project_type == "docker":
         os.system(f"docker-compose exec {project_name} pip3 uninstall {deps_text}")
