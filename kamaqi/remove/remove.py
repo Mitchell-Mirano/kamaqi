@@ -65,7 +65,7 @@ def add_deps(deps_list:List[str]):
     deps_text =" ".join(deps_list)
 
     if project_type == "normal":
-          if os.name == "posix":
+        if os.name == "posix":
             env_path = Path("./env/bin/activate").resolve()
             os.system(f". {str(env_path)} && pip uninstall {deps_text}")
             os.system(f". {str(env_path)} && pip freeze > requirements.txt")
