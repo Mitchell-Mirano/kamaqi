@@ -2,6 +2,7 @@ import os
 from typer import Typer
 from rich import print
 from typing import List
+from pathlib import Path
 
 from kamaqi.utils.files import read_project_file,save_project_file
 
@@ -11,19 +12,25 @@ app=Typer(help="Add apps and python deps")
              help="Add an app")
 def create_app(app_name:str):
 
+    app_name = app_name.lower().strip()
+
     project_data=read_project_file()
     project_apps_names=project_data["apps"].keys()
 
     if app_name in project_apps_names:
         print(f"App {app_name} already exists")
+    elif not app_name.endswith("s"):
+        print(f"App {app_name} must end with 's', Kamaqi wait app names in plural form")
     else:
         project_data["apps"][app_name] = {"status":"added"}
 
     save_project_file(project_data)
 
 @app.command(name="apps",
-            help="Add multiple apps")
+             help="Add multiple apps")
 def create_apps(apps:List[str]):
+
+    apps = [app.lower().strip() for app in apps]
 
     project_data=read_project_file()
     project_apps_names=project_data["apps"].keys()
@@ -31,6 +38,8 @@ def create_apps(apps:List[str]):
     for app_name in apps:
         if app_name in project_apps_names:
             print(f"App {app_name} already exists")
+        elif not app_name.endswith("s"):
+            print(f"App {app_name} must end with 's', Kamaqi wait app names in plural form")
         else:
              project_data["apps"][app_name] = {"status":"added"}
     
@@ -45,8 +54,14 @@ def add_dep(dep:str):
     project_name=project_data["project_name"]
 
     if project_type == "normal":
-        os.system(f". ./env/bin/activate && pip install {dep}")
-        os.system(f". ./env/bin/activate && pip freeze > requirements.txt")
+        if os.name == "posix":
+            env_path = Path("./env/bin/activate").resolve()
+            os.system(f". {str(env_path)} && pip install {dep}")
+            os.system(f". {str(env_path)} && pip freeze > requirements.txt")
+        if os.name == "nt":
+            env_path = Path("./env/Scripts/activate").resolve()
+            os.system(f"{str(env_path)} && pip install {dep}")
+            os.system(f"{str(env_path)} && pip freeze > requirements.txt")
 
     if project_type == "docker":
         os.system(f"docker-compose exec {project_name} pip3 install {dep}")
@@ -63,8 +78,14 @@ def add_deps(deps_list:List[str]):
     deps_text =" ".join(deps_list)
 
     if project_type == "normal":
-        os.system(f". ./env/bin/activate && pip install {deps_text}")
-        os.system(f". ./env/bin/activate && pip freeze > requirements.txt")
+        if os.name == "posix":
+            env_path = Path("./env/bin/activate").resolve()
+            os.system(f". {str(env_path)} && pip install {deps_text}")
+            os.system(f". {str(env_path)} && pip freeze > requirements.txt")
+        if os.name == "nt":
+            env_path = Path("./env/Scripts/activate").resolve()
+            os.system(f"{str(env_path)} && pip install {deps_text}")
+            os.system(f"{str(env_path)} && pip freeze > requirements.txt")
 
     if project_type == "docker":
         os.system(f"docker-compose exec {project_name} pip3 install {deps_text}")
