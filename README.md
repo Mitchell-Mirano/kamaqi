@@ -208,6 +208,11 @@ Install Kamaqi in the global environment.
 ```bash 
 pip3 install kamaqi
 ```
+Another way to install Kamaqi is using [pipx](https://github.com/pypa/pipx)
+
+```bash 
+pipx install kamaqi
+```
 
 ## **Basic Usage**
 
